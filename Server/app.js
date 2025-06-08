@@ -55,7 +55,7 @@ app.get("/send-notification", async (req, res) => {
     const results = []
 
     //為什麼會有多個訂閱？因為沒處理舊的、重複按下訂閱、每個瀏覽器/分頁都可產生新訂閱。
-    for(let i = 0; i < subDatabase.length; i++){
+    for(let i = subDatabase.length - 1; i >= 0; i--){
         const sub = subDatabase[i]
         try{
             await webPush.sendNotification(sub, "Hello world")
@@ -74,7 +74,7 @@ app.get("/send-notification", async (req, res) => {
             }
         }
     }
-    
+        
     res.status(200).json({
         status:"done",
         result: results

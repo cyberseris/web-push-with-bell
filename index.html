@@ -130,9 +130,6 @@ const requestNotificationPermission = async () => {
 
 //接收一個訂閱物件，向伺服器註冊訂閱
 const saveSubscription = async (subscription) => {
-    console.log("==============saveSubscription=============")
-    console.log("subscription: ", subscription)
-    console.log("==============saveSubscription=============")
     const response = await fetch('http://localhost:3000/save-subscription', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
@@ -198,23 +195,20 @@ const main = async () => {
     }
 
     // 等註冊完 Service Worker 再監聽 message
-    navigator.serviceWorker.addEventListener("message", event => {
-        console.log("navigator.serviceWorker.addEventListener")
-        console.log("✅ 收到 SW 訊息:", event.data);
-        if(event.data && event.data.type === "new-notification"){
-            setTimeout(() => {
-                console.log("========dot.style.display=========")
-                dot.style.display = "block"
-                console.log("dot: ", dot)
-            }, 10)
-            const msg = event.data.message || "你有一則新通知"
-            const item = document.createElement("div")
-            item.className = "notification-item"
-            item.textContent = msg
-            list.prepend(item)
-        }
-    })
-
+    navigator.serviceWorker.ready.then(registration => {
+        navigator.serviceWorker.addEventListener("message", event => {
+            if(event.data && event.data.type === "new-notification"){
+                setTimeout(() => {
+                    dot.style.display = "block"
+                }, 10)
+                const msg = event.data.message || "你有一則新通知"
+                const item = document.createElement("div")
+                item.className = "notification-item"
+                item.textContent = msg
+                list.prepend(item)
+            }
+        })
+    }) 
 }
 
 </script>
