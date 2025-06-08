@@ -1,0 +1,49 @@
+#notification-container{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+#notification-bell{
+    font-size: 32px;
+    position: relative;
+}
+
+#notification-bell.subscribed::before {
+    content: "✅";
+}
+
+#notification-dot{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: none;
+}
+
+#notification-list{
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    width: 250px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 8px;
+    display: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+.notification-item{
+    padding: 6px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-item:last-child{
+    border-bottom: none;
+}
